@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    color: white
+}
+
+:root {
+    --brun: rgba(35, 26, 18, 0.9);
+}
+
+body {
+   background-image: url("back.avif"); 
+}
+
+a {
+    color:white;
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+h1 {
+    font-family: "Playfair";
+    font-style: italic;
+    font-weight: 500;
+    font-size: 4em;
+    padding: 30px;
+    text-align: center;
+}
+
+/* recettes */
+.tableau {
+    background-color: var(--brun);
+    margin: 50px 300px 50px 300px;
+}
+
+table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 10px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+td {
+    padding: 20px 60px 20px 20px;
+    border-top: 1px solid white;
+}
+
+th {
+    padding: 10px 30px 30px 30px;
+}
+
+/* detailRecette */
+
+.recette {
+    background-color: var(--brun);
+    margin: 50px 300px 50px 300px;
+    padding: 50px;
+}
+
+.recette h2 {
+    font-family: 'Playfair';
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.5em;
+    padding: 10px
+}
+
+.recette h3 {
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.instructions {
+    padding-top: 15px;
+    font-size: 1.3em;
+}
