@@ -21,33 +21,45 @@ $mySqlClient = new PDO(
 
 // on recupère le contenu des tables
 $sqlQuery = 
-'SELECT nom_recette, temps_prep, nom_categorie, instructions, nom_ingredient, qtt, unite
+'SELECT nom_recette, temps_prep, nom_categorie, instructions
 FROM recette
 INNER JOIN categorie ON recette.id_categorie = categorie.id_categorie
-INNER JOIN recette_ingredient ON recette.id_recette= recette_ingredient.id_recette
-INNER JOIN ingredient ON recette_ingredient.id_ingredient = ingredient.id_ingredient
-WHERE recette.id_recette = :id'
+WHERE id_recette = :id'
 ;
 $recettesStatement = $mySqlClient->prepare($sqlQuery);
 $recettesStatement->execute([
     'id' => $_GET['id']
 ]);
-$recettes = $recettesStatement->fetchAll();
+$recettes = $recettesStatement->fetch();
 
-foreach ($recettes as $recette) {
-    echo "<div class='recette'>",
-            "<h1>".$recette['nom_recette']."</h1>",
-                "<h2>".$recette['nom_categorie'].", ".$recette['temps_prep']." minutes de préparation</h2>",
+$sqlQuery = 
+'SELECT nom_ingredient, qtt, unite
+FROM ingredient
+INNER JOIN recette_ingredient ON ingredient.id_ingredient = recette_ingredient.id_ingredient
+INNER JOIN recette ON recette_ingredient.id_recette = recette.id_recette
+WHERE recette.id_recette = :id'
+;
+$ingredientsStatement = $mySqlClient->prepare($sqlQuery);
+$ingredientsStatement->execute([
+    'id' => $_GET['id']
+]);
+$ingredients = $ingredientsStatement->fetchAll();
+
+
+echo "<div class='recette'>",
+        "<h1>".$recettes['nom_recette']."</h1>",
+            "<h2>".$recettes['nom_categorie'].", ".$recettes['temps_prep']." minutes de préparation</h2>",
                 "<h3>Ingredients:</h3>";
-    foreach ($recettes as $recette){
+    foreach ($ingredients as $ingredient){
     echo "<p>",
             "<ul>",
-                "<li>".$recette['qtt']." ".$recette['unite']." ".$recette['nom_ingredient']."</li>",
+                "<li>".$ingredient['qtt']." ".$ingredient['unite']." ".$ingredient['nom_ingredient']."</li>",
             "</ul>",
         "</p>";
     };
-    echo "<div class='instructions'><p>".$recette['instructions']."</div></div>";
-};
+
+echo "<div class='instructions'><p>".$recettes['instructions']."</div></div>";
+
 
 
 ?>
